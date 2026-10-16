@@ -1,5 +1,50 @@
-/* GoogleMaps-specific styles */
+/* ============================================================
+   GraphVerse — Google Maps Route Simulator Styles
+   ============================================================ */
 
+/* ── Layout & Sidebar ── */
+.gm-layout {
+  display: grid;
+  grid-template-columns: 330px 1fr;
+  gap: var(--space-6);
+  margin-bottom: var(--space-8);
+}
+
+.gm-controls {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.gm-card {
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  box-shadow: var(--shadow-card);
+}
+
+.gm-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-3);
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.gm-card-title {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-text-secondary);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+/* ── Select Dropdowns ── */
 .gm-select {
   width: 100%;
   padding: var(--space-2) var(--space-3);
@@ -7,7 +52,7 @@
   border: 1px solid var(--color-border);
   border-radius: var(--radius-sm);
   color: var(--color-text-primary);
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   font-family: var(--font-body);
   cursor: pointer;
   outline: none;
@@ -20,48 +65,398 @@
   padding-right: 30px;
 }
 
-.gm-select:focus { border-color: var(--color-electric); }
-.gm-select option { background: var(--color-bg-surface); }
+.gm-select:focus {
+  border-color: var(--color-amber);
+}
 
-/* Result panel */
-.gm-result {
+.gm-select option {
+  background: var(--color-bg-surface);
+  color: var(--color-text-primary);
+}
+
+/* ── Action Buttons ── */
+.gm-btn-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-2);
+}
+
+.btn-amber {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  color: #050b18;
+  border: none;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 0 16px rgba(245, 158, 11, 0.35);
+  transition: all var(--transition-base);
+}
+
+.btn-amber:hover:not(:disabled) {
+  box-shadow: 0 0 24px rgba(245, 158, 11, 0.6);
+  transform: translateY(-1px);
+}
+
+.btn-amber:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ── Playback Controls ── */
+.gm-playback-bar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-2);
+}
+
+.gm-play-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: var(--radius-sm);
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-primary);
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.gm-play-btn:hover:not(:disabled) {
+  border-color: var(--color-amber);
+  color: var(--color-amber);
+  background: rgba(245, 158, 11, 0.08);
+}
+
+.gm-play-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.gm-play-btn--active {
+  background: rgba(245, 158, 11, 0.15) !important;
+  border-color: var(--color-amber) !important;
+  color: var(--color-amber) !important;
+}
+
+.gm-step-indicator {
+  flex: 1;
+  text-align: center;
+  font-size: 0.75rem;
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: var(--color-text-secondary);
+}
+
+.gm-step-indicator strong {
+  color: var(--color-amber);
+}
+
+.gm-step-desc {
+  font-size: 0.72rem;
+  color: var(--color-text-secondary);
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-sm);
+  padding: 6px 10px;
+  margin-top: var(--space-2);
+  line-height: 1.4;
+  min-height: 36px;
+  display: flex;
+  align-items: center;
+}
+
+/* ── Map Canvas Area ── */
+.gm-canvas-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.gm-canvas-wrap {
+  background: #081224;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+  position: relative;
+}
+
+.gm-canvas-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-3) var(--space-5);
+  border-bottom: 1px solid var(--color-border);
   background: var(--color-bg-card);
-  border: 1px solid rgba(16,185,129,0.3);
+}
+
+.gm-canvas-title {
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.gm-canvas-stats {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-size: 0.72rem;
+  color: var(--color-text-muted);
+}
+
+.gm-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  user-select: none;
+  touch-action: none;
+  background-color: #060e1d;
+  background-image: 
+    radial-gradient(circle at 50% 50%, rgba(245, 158, 11, 0.02) 0%, transparent 70%),
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 100% 100%, 40px 40px, 40px 40px;
+}
+
+/* ── Road Edges & States ── */
+.gm-road {
+  cursor: pointer;
+  transition: stroke 0.25s ease, stroke-width 0.25s ease, opacity 0.25s ease;
+}
+
+.gm-road-casing {
+  stroke: rgba(0, 0, 0, 0.6);
+  stroke-linecap: round;
+}
+
+.gm-road--default {
+  stroke: #2a3b53;
+  stroke-width: 3.5;
+  stroke-linecap: round;
+}
+
+.gm-road--default:hover {
+  stroke: #475569;
+  stroke-width: 5;
+}
+
+.gm-road--examining {
+  stroke: #f59e0b !important;
+  stroke-width: 5 !important;
+  stroke-dasharray: 6 3;
+  animation: gmRoadFlow 1s linear infinite;
+  filter: drop-shadow(0 0 6px rgba(245, 158, 11, 0.6));
+}
+
+.gm-road--relaxed {
+  stroke: #00d4ff !important;
+  stroke-width: 5 !important;
+  filter: drop-shadow(0 0 8px rgba(0, 212, 255, 0.6));
+}
+
+.gm-road--path {
+  stroke: #10b981 !important;
+  stroke-width: 6 !important;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 10px rgba(16, 185, 129, 0.7));
+}
+
+.gm-road--alt-path {
+  stroke: #8b5cf6 !important;
+  stroke-width: 4 !important;
+  stroke-dasharray: 8 4;
+  opacity: 0.85;
+}
+
+@keyframes gmRoadFlow {
+  to { stroke-dashoffset: -18; }
+}
+
+/* Weight Badge on Road */
+.gm-weight-badge {
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.gm-weight-badge:hover {
+  transform: scale(1.15);
+}
+
+.gm-weight-rect {
+  fill: rgba(5, 11, 24, 0.92);
+  stroke: rgba(255, 255, 255, 0.12);
+  stroke-width: 1;
+  rx: 4px;
+}
+
+.gm-weight-text {
+  font-family: var(--font-display);
+  font-size: 8.5px;
+  font-weight: 700;
+  fill: #94aabe;
+  text-anchor: middle;
+  dominant-baseline: middle;
+}
+
+.gm-weight-badge--path .gm-weight-rect {
+  stroke: #10b981;
+  fill: rgba(16, 185, 129, 0.15);
+}
+
+.gm-weight-badge--path .gm-weight-text {
+  fill: #10b981;
+}
+
+/* ── Node Group ── */
+.gm-node-group {
+  cursor: grab;
+  transition: transform 0.15s ease;
+}
+
+.gm-node-group:active {
+  cursor: grabbing;
+}
+
+.gm-node-pulse {
+  animation: gmNodePulseAnim 2s infinite ease-in-out;
+}
+
+@keyframes gmNodePulseAnim {
+  0% { r: 32px; opacity: 0.8; stroke-width: 2; }
+  50% { r: 40px; opacity: 0.2; stroke-width: 4; }
+  100% { r: 32px; opacity: 0.8; stroke-width: 2; }
+}
+
+/* ── Route Comparison Cards ── */
+.gm-routes-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4);
+}
+
+.gm-route-card {
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   padding: var(--space-4);
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
 }
 
-.gm-result-row {
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.8rem;
-  color: var(--color-text-secondary);
-  margin-bottom: var(--space-2);
+.gm-route-card--optimal {
+  border-color: rgba(16, 185, 129, 0.4);
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.05) 0%, rgba(13, 30, 56, 0.9) 100%);
 }
 
-.gm-result-path {
-  margin-top: var(--space-3);
+.gm-route-card--optimal::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: #10b981;
+}
+
+.gm-route-card--alt {
+  border-color: rgba(139, 92, 246, 0.3);
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.05) 0%, rgba(13, 30, 56, 0.9) 100%);
+}
+
+.gm-route-card--alt::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: #8b5cf6;
+}
+
+.gm-route-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+}
+
+.gm-route-badge--optimal {
+  background: rgba(16, 185, 129, 0.15);
+  color: #10b981;
+}
+
+.gm-route-badge--alt {
+  background: rgba(139, 92, 246, 0.15);
+  color: #a78bfa;
+}
+
+.gm-route-dist {
+  font-size: 1.4rem;
+  font-family: var(--font-display);
+  font-weight: 700;
+  margin: var(--space-2) 0 4px;
+  color: var(--color-text-primary);
+}
+
+.gm-route-seq {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 2px;
-  font-size: 0.75rem;
+  gap: 4px;
+  font-size: 0.74rem;
+  color: var(--color-text-secondary);
+  margin-top: var(--space-2);
 }
 
-.gm-path-node {
-  font-weight: 700;
-  padding: 1px 4px;
-  border-radius: 3px;
-  background: rgba(255,255,255,0.05);
+.gm-seq-pill {
+  padding: 2px 7px;
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.05);
+  font-weight: 600;
 }
 
-.gm-path-arrow {
+.gm-seq-arrow {
   color: var(--color-text-muted);
-  font-size: 0.65rem;
-  padding: 0 2px;
+  font-size: 0.7rem;
 }
 
-/* Distance table */
+/* ── Manage Roads & Locations Modal/List ── */
+.gm-manage-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-height: 140px;
+  overflow-y: auto;
+}
+
+.gm-manage-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px 10px;
+  background: var(--color-bg-surface);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-sm);
+  font-size: 0.74rem;
+}
+
+.gm-manage-row:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+/* ── Distance Table ── */
 .gm-dist-table {
   background: var(--color-bg-surface);
   border: 1px solid var(--color-border);
@@ -75,22 +470,141 @@
   align-items: center;
   gap: var(--space-2);
   padding: 5px var(--space-3);
-  border-bottom: 1px solid rgba(255,255,255,0.04);
-  transition: background var(--transition-fast);
-  font-size: 0.8rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  font-size: 0.78rem;
 }
 
-.gm-dist-row:last-child { border-bottom: none; }
+.gm-dist-row:last-child {
+  border-bottom: none;
+}
 
 .gm-dist-row--path {
-  background: rgba(16,185,129,0.06);
+  background: rgba(16, 185, 129, 0.08);
 }
 
 .gm-dist-val {
   font-family: var(--font-display);
   font-size: 0.8rem;
   font-weight: 700;
-  color: var(--color-electric);
-  min-width: 20px;
+  color: var(--color-amber);
+  min-width: 44px;
   text-align: right;
+}
+
+/* ── Form Inputs ── */
+.gm-input-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: var(--space-2);
+}
+
+.gm-input-label {
+  font-size: 0.68rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.gm-text-input {
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 6px 10px;
+  color: var(--color-text-primary);
+  font-size: 0.8rem;
+  outline: none;
+}
+
+.gm-text-input:focus {
+  border-color: var(--color-amber);
+}
+
+/* ── Educational Cards ── */
+.gm-edu-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-5);
+  margin-top: var(--space-8);
+}
+
+.gm-edu-card {
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  transition: all var(--transition-base);
+}
+
+.gm-edu-card:hover {
+  border-color: var(--color-border-hover);
+  transform: translateY(-2px);
+}
+
+.gm-edu-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: var(--radius-md);
+  background: rgba(245, 158, 11, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  color: var(--color-amber);
+}
+
+.gm-edu-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+}
+
+.gm-edu-text {
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+  line-height: 1.7;
+}
+
+.gm-edu-text strong {
+  color: var(--color-text-primary);
+}
+
+.gm-disclaimer-box {
+  grid-column: 1 / -1;
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.08) 0%, rgba(16, 185, 129, 0.08) 100%);
+  border: 1px solid rgba(245, 158, 11, 0.25);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5) var(--space-6);
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-4);
+}
+
+.gm-disclaimer-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--color-amber);
+  margin-bottom: var(--space-1);
+}
+
+.gm-disclaimer-text {
+  font-size: 0.84rem;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+}
+
+/* ── Responsive ── */
+@media (max-width: 1024px) {
+  .gm-layout {
+    grid-template-columns: 1fr;
+  }
+  .gm-edu-grid {
+    grid-template-columns: 1fr;
+  }
+  .gm-routes-grid {
+    grid-template-columns: 1fr;
+  }
 }

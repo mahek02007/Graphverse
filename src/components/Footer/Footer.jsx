@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom'
 import './Footer.css'
 
+const CURRENT_YEAR = new Date().getFullYear()
+
 const LINKS = [
   { to: '/',               label: 'Home' },
   { to: '/social-network', label: 'Social Network' },
@@ -66,7 +68,7 @@ export default function Footer() {
       <div className="footer__bottom">
         <div className="container footer__bottom-inner">
           <p className="footer__copy">
-            © {new Date().getFullYear()} GraphVerse · Interactive Graph Theory Simulator
+            © {CURRENT_YEAR} GraphVerse · Interactive Graph Theory Simulator
           </p>
           <div className="footer__bottom-dots">
             <span className="glow-dot glow-dot-electric" />

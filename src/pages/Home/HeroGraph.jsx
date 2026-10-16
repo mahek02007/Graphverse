@@ -73,7 +73,7 @@ export default function HeroGraph() {
 
     const update = () => {
       t += 0.012
-      nodes.forEach((node, i) => {
+      nodes.forEach((node) => {
         node.x = node.ox + Math.sin(t + node.phase) * 14
         node.y = node.oy + Math.cos(t * 0.7 + node.phase) * 10
 

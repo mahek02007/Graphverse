@@ -1,6 +1,6 @@
 .page-header {
   position: relative;
-  padding: calc(80px + var(--space-16)) 0 var(--space-12);
+  padding: calc(70px + var(--space-8)) 0 var(--space-10);
   overflow: hidden;
   border-bottom: 1px solid var(--color-border);
 }
@@ -35,21 +35,92 @@
   z-index: 1;
 }
 
+/* Nav row: Home link + Presentation mode toggle */
+.page-header__nav-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-4);
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.page-header__home-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-secondary);
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all var(--transition-base);
+}
+
+.page-header__home-btn:hover {
+  background: rgba(0, 212, 255, 0.1);
+  border-color: var(--color-electric);
+  color: var(--color-electric);
+  transform: translateX(-2px);
+}
+
+.page-header__home-arrow {
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.page-header__pres-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.15), rgba(0, 212, 255, 0.15));
+  border: 1px solid rgba(124, 58, 237, 0.4);
+  color: #f0f6ff;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  box-shadow: 0 0 12px rgba(124, 58, 237, 0.2);
+}
+
+.page-header__pres-btn:hover {
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.3), rgba(0, 212, 255, 0.3));
+  border-color: var(--color-electric);
+  box-shadow: 0 0 20px rgba(0, 212, 255, 0.35);
+  transform: translateY(-1px);
+}
+
+.page-header__pres-btn--active {
+  background: linear-gradient(135deg, #7c3aed, #00d4ff) !important;
+  color: #050b18 !important;
+  border-color: #fff !important;
+  box-shadow: 0 0 24px rgba(0, 212, 255, 0.6) !important;
+}
+
+.page-header__pres-icon {
+  font-size: 1rem;
+}
+
 .page-header__meta {
-  margin-bottom: var(--space-5);
+  margin-bottom: var(--space-4);
 }
 
 .page-header__title-row {
   display: flex;
   align-items: center;
   gap: var(--space-5);
-  margin-bottom: var(--space-5);
+  margin-bottom: var(--space-4);
 }
 
 .page-header__icon {
-  width: 64px;
-  height: 64px;
-  background: rgba(0,212,255,0.08);
+  width: 58px;
+  height: 58px;
+  background: rgba(0, 212, 255, 0.08);
   border: 1px solid var(--color-border-hover);
   border-radius: var(--radius-lg);
   display: flex;
@@ -59,12 +130,12 @@
 }
 
 .page-header__icon svg {
-  width: 36px;
-  height: 36px;
+  width: 34px;
+  height: 34px;
 }
 
 .page-header__title {
-  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
   font-weight: 800;
   letter-spacing: -0.03em;
   background: linear-gradient(135deg, #f0f6ff 30%, #00d4ff 100%);
@@ -75,11 +146,44 @@
 }
 
 .page-header__subtitle {
-  font-size: 1.05rem;
+  font-size: 1rem;
   color: var(--color-text-secondary);
-  max-width: 680px;
-  line-height: 1.75;
-  margin-bottom: var(--space-8);
+  max-width: 720px;
+  line-height: 1.7;
+  margin-bottom: var(--space-5);
+}
+
+/* Intro Box */
+.page-header__intro-box {
+  background: rgba(10, 22, 40, 0.85);
+  border: 1px solid rgba(0, 212, 255, 0.2);
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-5);
+  margin-bottom: var(--space-6);
+  max-width: 820px;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  backdrop-filter: blur(10px);
+}
+
+.page-header__intro-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--color-electric);
+  letter-spacing: 0.06em;
+  background: rgba(0, 212, 255, 0.12);
+  padding: 3px 8px;
+  border-radius: var(--radius-sm);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.page-header__intro-text {
+  font-size: 0.88rem;
+  color: var(--color-text-primary);
+  line-height: 1.6;
 }
 
 /* Concept pills */
@@ -103,7 +207,7 @@
 
 .concept-pill:hover {
   border-color: var(--color-electric);
-  background: rgba(0,212,255,0.06);
+  background: rgba(0, 212, 255, 0.06);
 }
 
 .concept-pill__label {
@@ -122,5 +226,9 @@
   .page-header__title-row {
     flex-direction: column;
     align-items: flex-start;
+  }
+  .page-header__nav-row {
+    flex-direction: column;
+    align-items: stretch;
   }
 }

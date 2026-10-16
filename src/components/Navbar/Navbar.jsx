@@ -22,7 +22,11 @@ export default function Navbar() {
   }, [])
 
   // Close menu on navigation
-  useEffect(() => { setMenuOpen(false) }, [location])
+  const [prevPath, setPrevPath] = useState(location.pathname)
+  if (prevPath !== location.pathname) {
+    setPrevPath(location.pathname)
+    setMenuOpen(false)
+  }
 
   return (
     <header className={`navbar ${scrolled ? 'navbar--scrolled' : ''}`}>

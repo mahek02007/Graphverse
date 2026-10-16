@@ -244,13 +244,181 @@
 .info-card__text strong { color: var(--color-text-primary); }
 .info-card__text em     { color: var(--color-electric); font-style: normal; font-weight: 500; }
 
+/* ── Learning Summary ("What did we learn?") ── */
+.learning-summary-section {
+  margin-top: var(--space-10);
+  margin-bottom: var(--space-8);
+}
+
+.learning-summary-card {
+  background: linear-gradient(135deg, rgba(10, 22, 40, 0.95) 0%, rgba(13, 30, 56, 0.95) 100%);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-8);
+  box-shadow: var(--shadow-card);
+  position: relative;
+  overflow: hidden;
+}
+
+.learning-summary-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--color-electric), var(--color-violet), var(--color-pink));
+}
+
+.learning-summary-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-electric);
+  background: rgba(0, 212, 255, 0.1);
+  border: 1px solid rgba(0, 212, 255, 0.2);
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  margin-bottom: var(--space-3);
+}
+
+.learning-summary-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #f0f6ff;
+  margin-bottom: var(--space-6);
+}
+
+.learning-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: var(--space-5);
+}
+
+.learning-summary-item {
+  background: rgba(5, 11, 24, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  transition: all var(--transition-base);
+}
+
+.learning-summary-item:hover {
+  border-color: var(--color-border-hover);
+  transform: translateY(-2px);
+}
+
+.learning-summary-icon {
+  font-size: 1.4rem;
+  margin-bottom: 2px;
+}
+
+.learning-summary-heading {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--color-electric);
+}
+
+.learning-summary-desc {
+  font-size: 0.84rem;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+}
+
+/* ── Live Stats Panel ── */
+.sim-stats-card {
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  box-shadow: var(--shadow-card);
+}
+
+.sim-stats-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-3);
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.sim-stats-title {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-text-secondary);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.sim-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-2);
+}
+
+.sim-stat-box {
+  background: var(--color-bg-surface);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-sm);
+  padding: var(--space-2) var(--space-3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.sim-stat-val {
+  font-size: 1.15rem;
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: var(--color-text-primary);
+}
+
+.sim-stat-label {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  letter-spacing: 0.05em;
+  margin-top: 2px;
+}
+
+/* ── Presentation Mode Layout Modifier ── */
+.sim-layout--pres {
+  grid-template-columns: 1fr !important;
+}
+
+.sim-layout--pres .sim-canvas-wrap {
+  min-height: 520px;
+}
+
+.sim-layout--pres .sim-controls {
+  order: 2;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--space-4);
+}
+
 /* ── Responsive ── */
 @media (max-width: 900px) {
   .sim-layout     { grid-template-columns: 1fr; }
   .info-cards     { grid-template-columns: 1fr; }
+  .learning-summary-grid { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 600px) {
   .sim-layout     { gap: var(--space-4); }
   .mode-buttons   { grid-template-columns: 1fr; }
+  .sim-stats-grid { grid-template-columns: 1fr; }
 }

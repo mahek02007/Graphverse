@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect, useCallback, useMemo } from 'react'
 import PageHeader from '../../components/PageHeader/PageHeader'
+import PresentationBar from '../../components/PresentationMode/PresentationBar'
 import './SocialNetwork.css'
 import './SocialNetworkSim.css'
 
@@ -68,51 +69,87 @@ function computeDegrees(nodes, edges) {
 }
 
 /* ════════════════════════════════════════════════════════════
-   LEARNING-MODE STEPS
+   LEARNING & PRESENTATION-MODE STEPS
    ════════════════════════════════════════════════════════════ */
 
 const LEARN_STEPS = [
   {
     id: 'node',
-    title: 'Step 1 — What is a Node?',
+    title: 'Slide 1 — Vertices as Social Media Users',
+    mainConcept: 'In graph theory, entities are modeled as vertices (nodes). Every individual profile on a platform like Instagram or X is a unique vertex.',
+    talkingPoints: [
+      'Each node possesses distinct attributes: an identifier, display name, and unique identity.',
+      'Graph theory abstracts complex real-world humans into discrete points for mathematical reasoning.',
+    ],
+    highlightSummary: 'Aisha is selected as the primary demonstration user.',
     body: 'Each circle in the graph is called a <strong>node</strong> (or vertex). Here, every node represents a <strong>social media user</strong>. The label shows their name and the circle colour is unique to them.',
     highlight: { nodes: ['aisha'], edges: [] },
     tip: 'Aisha is selected below. Her node glows to show she is highlighted.',
   },
   {
     id: 'edge',
-    title: 'Step 2 — What is a Directed Edge?',
+    title: 'Slide 2 — What is a Directed Edge?',
+    mainConcept: 'A directed edge (or arc) connects two vertices with a designated orientation: u → v signifies a one-way relationship.',
+    talkingPoints: [
+      'Point out the arrowhead: The arrow originates at the follower and terminates at the account being followed.',
+      'A directed graph G = (V, E) consists of ordered pairs (u, v) ∈ E.',
+    ],
+    highlightSummary: 'Arrow connecting Aisha → Rahul indicates Aisha follows Rahul.',
     body: 'A line with an <strong>arrowhead</strong> connecting two nodes is a <strong>directed edge</strong>. The arrow points <em>from follower → to the account they follow</em>. The direction matters!',
     highlight: { nodes: ['aisha', 'rahul'], edges: [{ from: 'aisha', to: 'rahul' }] },
     tip: 'The arrow from Aisha → Rahul means Aisha follows Rahul.',
   },
   {
     id: 'not-mutual',
-    title: 'Step 3 — Following is NOT Mutual',
+    title: 'Slide 3 — The Asymmetry Principle',
+    mainConcept: 'Unlike friendship in an undirected graph, following is inherently asymmetric. (A, B) ∈ E does not imply (B, A) ∈ E.',
+    talkingPoints: [
+      'Ask students: If you follow a celebrity with 50M followers, do they follow you back?',
+      'Asymmetry creates complex structural dynamics: influence hubs, broadcast trees, and echo chambers.',
+    ],
+    highlightSummary: 'Notice there is no return arrow from Rahul back to Aisha.',
     body: 'Because edges have direction, <strong>Aisha follows Rahul</strong> does NOT automatically mean <strong>Rahul follows Aisha</strong>. This is the key difference between a directed and undirected graph.',
     highlight: { nodes: ['aisha', 'rahul'], edges: [{ from: 'aisha', to: 'rahul' }] },
     tip: 'Notice there is no arrow from Rahul back to Aisha — the relationship is one-way.',
   },
   {
     id: 'out-degree',
-    title: 'Step 4 — Out-Degree (Following Count)',
+    title: 'Slide 4 — Out-Degree (Following Count)',
+    mainConcept: 'Out-degree deg⁺(v) is the count of edges directed away from node v, representing how many accounts that user follows.',
+    talkingPoints: [
+      'High out-degree indicates an active consumer or aggregator of information.',
+      'Aisha has out-degree = 2 because she sends links to both Rahul and Karan.',
+    ],
+    highlightSummary: 'Aisha\'s outgoing edges are emphasized in emerald green.',
     body: 'The <strong>out-degree</strong> of a node is the number of <em>outgoing</em> edges — i.e., how many accounts this user follows. Aisha has out-degree = 2 (she follows Rahul and Karan).',
     highlight: { nodes: ['aisha', 'rahul', 'karan'], edges: [{ from: 'aisha', to: 'rahul' }, { from: 'aisha', to: 'karan' }] },
     tip: 'Aisha\'s two outgoing arrows are highlighted. Out-degree = 2.',
   },
   {
     id: 'in-degree',
-    title: 'Step 5 — In-Degree (Follower Count)',
+    title: 'Slide 5 — In-Degree (Follower Count & Influence)',
+    mainConcept: 'In-degree deg⁻(v) is the count of edges pointing into node v, representing the number of followers (social prestige).',
+    talkingPoints: [
+      'High in-degree nodes act as broadcast authorities whose posts propagate widely.',
+      'Karan has in-degree = 2 because both Aisha and Priya point towards him.',
+    ],
+    highlightSummary: 'Incoming arrows into Karan are highlighted in neon pink.',
     body: 'The <strong>in-degree</strong> of a node is the number of <em>incoming</em> edges — i.e., how many users follow this account. Karan is followed by Aisha and Priya, so his in-degree = 2.',
     highlight: { nodes: ['aisha', 'priya', 'karan'], edges: [{ from: 'aisha', to: 'karan' }, { from: 'priya', to: 'karan' }] },
     tip: 'Two arrows pointing INTO Karan. In-degree = 2. High in-degree → popular account.',
   },
   {
     id: 'full',
-    title: 'Step 6 — The Complete Network',
+    title: 'Slide 6 — Network Density & Reachability',
+    mainConcept: 'Combining individual follow links creates paths of reachability through which information, memes, and content cascade.',
+    talkingPoints: [
+      'Trace a multi-hop path: Neha → Aisha → Rahul → Priya.',
+      'Conclude the lesson by opening the interactive sandbox for student exploration.',
+    ],
+    highlightSummary: 'All users and connections in the social network are shown.',
     body: 'The full graph shows all follow relationships. You can now <strong>interact freely</strong>: select users, follow/unfollow, add users, and simulate follows. Use the controls on the left panel.',
     highlight: { nodes: [], edges: [] },
-    tip: 'Click "Exit Learning Mode" to start experimenting with the simulator!',
+    tip: 'Click "Exit Presentation" to experiment with the interactive simulator!',
   },
 ]
 
@@ -192,8 +229,24 @@ export default function SocialNetwork() {
 
   /* ─── Learning mode highlight ─── */
   const learnData = learnMode ? LEARN_STEPS[learnStep] : null
-  const learnNodeSet  = new Set(learnData?.highlight.nodes || [])
-  const learnEdgeSet  = new Set((learnData?.highlight.edges || []).map(e => `${e.from}-${e.to}`))
+  const learnNodeSet  = useMemo(() => new Set(learnData?.highlight.nodes || []), [learnData])
+  const learnEdgeSet  = useMemo(() => new Set((learnData?.highlight.edges || []).map(e => `${e.from}-${e.to}`)), [learnData])
+
+  /* ── Reciprocal follow pairs count ── */
+  const reciprocalCount = useMemo(() => {
+    let count = 0
+    const seen = new Set()
+    edges.forEach(e => {
+      const key = `${e.from}-${e.to}`
+      const rev = `${e.to}-${e.from}`
+      if (edges.some(x => x.from === e.to && x.to === e.from) && !seen.has(key)) {
+        count++
+        seen.add(key)
+        seen.add(rev)
+      }
+    })
+    return count
+  }, [edges])
 
   /* ────────────────────────────────────────────────
      LOG helper
@@ -467,6 +520,13 @@ export default function SocialNetwork() {
         icon={ICON}
         title="Social Media Network"
         subtitle="Model user follow relationships as a directed graph. Each arrow shows who follows whom — and following is NOT automatically mutual."
+        intro="In social networks like Instagram and X, connections are directional: following someone does not require them to follow you back. This asymmetry is the core difference between directed and undirected graphs."
+        showHome={true}
+        presentationMode={learnMode}
+        onTogglePresentation={() => {
+          setLearnMode(m => !m)
+          setLearnStep(0)
+        }}
         concepts={[
           { label: 'Directed Graph',   desc: 'Edges A→B ≠ B→A: direction matters' },
           { label: 'Out-Degree',       desc: 'How many accounts a user follows' },
@@ -479,56 +539,21 @@ export default function SocialNetwork() {
       <section className="simulation-body section-sm">
         <div className="container">
 
-          {/* ══════════════ LEARNING MODE BANNER ══════════════ */}
-          {learnMode && learnData && (
-            <div className="learn-banner">
-              <div className="learn-banner__header">
-                <span className="learn-banner__step-badge">Learning Mode</span>
-                <span className="learn-banner__counter">{learnStep + 1} / {LEARN_STEPS.length}</span>
-              </div>
-              <h3 className="learn-banner__title" dangerouslySetInnerHTML={{ __html: learnData.title }} />
-              <p className="learn-banner__body" dangerouslySetInnerHTML={{ __html: learnData.body }} />
-              <div className="learn-banner__tip">
-                <span className="learn-tip-icon">💡</span>
-                <span>{learnData.tip}</span>
-              </div>
-              <div className="learn-banner__nav">
-                <button
-                  className="btn btn-ghost btn-sm"
-                  onClick={() => setLearnStep(s => Math.max(0, s - 1))}
-                  disabled={learnStep === 0}
-                >← Previous</button>
-                <div className="learn-dots">
-                  {LEARN_STEPS.map((_, i) => (
-                    <button
-                      key={i}
-                      className={`learn-dot ${i === learnStep ? 'learn-dot--active' : ''}`}
-                      onClick={() => setLearnStep(i)}
-                      aria-label={`Step ${i + 1}`}
-                    />
-                  ))}
-                </div>
-                {learnStep < LEARN_STEPS.length - 1 ? (
-                  <button className="btn btn-primary btn-sm"
-                    onClick={() => setLearnStep(s => s + 1)}>
-                    Next →
-                  </button>
-                ) : (
-                  <button className="btn btn-primary btn-sm"
-                    onClick={() => { setLearnMode(false); addLog('📚 Learning mode completed!') }}>
-                    Exit Learning Mode
-                  </button>
-                )}
-                <button className="btn btn-ghost btn-sm"
-                  onClick={() => setLearnStep(0)}>
-                  ↺ Replay
-                </button>
-              </div>
-            </div>
+          {/* ══════════════ CLASSROOM PRESENTATION MODE ══════════════ */}
+          {learnMode && (
+            <PresentationBar
+              slides={LEARN_STEPS}
+              currentIndex={learnStep}
+              onNext={() => setLearnStep(s => Math.min(LEARN_STEPS.length - 1, s + 1))}
+              onPrev={() => setLearnStep(s => Math.max(0, s - 1))}
+              onSelectSlide={setLearnStep}
+              onExit={() => setLearnMode(false)}
+              themeColor="#00d4ff"
+            />
           )}
 
           {/* ══════════════ MAIN LAYOUT ══════════════ */}
-          <div className="sn-layout">
+          <div className={`sn-layout ${learnMode ? 'sim-layout--pres' : ''}`}>
 
             {/* ════ LEFT PANEL ════ */}
             <aside className="sn-panel">
@@ -677,7 +702,7 @@ export default function SocialNetwork() {
                     <span>Follower (in-neighbour)</span>
                   </div>
                   <div className="sn-legend-row">
-                    <div className="sn-legend-dot" style={{background:'#f59e0b',boxShadow:'0 0 8px #f59e0b',border:'2px dashed #f59e0b',background:'transparent'}}/>
+                    <div className="sn-legend-dot" style={{boxShadow:'0 0 8px #f59e0b',border:'2px dashed #f59e0b',background:'transparent'}}/>
                     <span>Follow target</span>
                   </div>
                 </div>
@@ -850,21 +875,21 @@ export default function SocialNetwork() {
               <div className="sn-info-row">
                 {/* Graph stats */}
                 <div className="sn-stat-card">
-                  <p className="sn-stat-card__title">Network Stats</p>
+                  <p className="sn-stat-card__title">Live Network Stats</p>
                   <div className="sn-stats-grid">
                     <div className="sn-stat">
                       <span className="sn-stat__val">{nodes.length}</span>
-                      <span className="sn-stat__label">Users</span>
+                      <span className="sn-stat__label">Users (V)</span>
                     </div>
                     <div className="sn-stat">
                       <span className="sn-stat__val">{edges.length}</span>
-                      <span className="sn-stat__label">Follows</span>
+                      <span className="sn-stat__label">Follows (E)</span>
                     </div>
                     <div className="sn-stat">
-                      <span className="sn-stat__val" style={{ color: '#00d4ff' }}>
-                        {selected ? outDeg[selected] || 0 : '—'}
+                      <span className="sn-stat__val" style={{ color: '#10b981' }}>
+                        {reciprocalCount}
                       </span>
-                      <span className="sn-stat__label">Following</span>
+                      <span className="sn-stat__label">Mutual (⇄)</span>
                     </div>
                     <div className="sn-stat">
                       <span className="sn-stat__val" style={{ color: '#ec4899' }}>
@@ -977,6 +1002,44 @@ export default function SocialNetwork() {
               </p>
             </div>
           </div>
+
+          {/* ══════════════ WHAT DID WE LEARN? SUMMARY ══════════════ */}
+          <section className="learning-summary-section">
+            <div className="learning-summary-card">
+              <span className="learning-summary-badge">🎓 Core Key Takeaways</span>
+              <h3 className="learning-summary-title">What Did We Learn?</h3>
+              <div className="learning-summary-grid">
+                <div className="learning-summary-item">
+                  <div className="learning-summary-icon">➡️</div>
+                  <h4 className="learning-summary-heading">Edges Have Direction (u → v)</h4>
+                  <p className="learning-summary-desc">
+                    A directed edge denotes an asymmetric relationship: (A, B) ≠ (B, A). The arrow points from the follower to the account being followed.
+                  </p>
+                </div>
+                <div className="learning-summary-item">
+                  <div className="learning-summary-icon">⚖️</div>
+                  <h4 className="learning-summary-heading">In-Degree vs. Out-Degree</h4>
+                  <p className="learning-summary-desc">
+                    In-degree counts incoming arrows (prestige/followers), while out-degree counts outgoing arrows (following). They are rarely balanced in real social networks.
+                  </p>
+                </div>
+                <div className="learning-summary-item">
+                  <div className="learning-summary-icon">🌐</div>
+                  <h4 className="learning-summary-heading">Information Reachability</h4>
+                  <p className="learning-summary-desc">
+                    Information cascades along directed pathways. High in-degree nodes act as influential broadcasters whose messages propagate through the network.
+                  </p>
+                </div>
+                <div className="learning-summary-item">
+                  <div className="learning-summary-icon">🤝</div>
+                  <h4 className="learning-summary-heading">Reciprocity in Social Graphs</h4>
+                  <p className="learning-summary-desc">
+                    Mutual friendships occur when both (u, v) and (v, u) exist in E, forming bidirectional subgraphs within an otherwise asymmetric network.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
         </div>
       </section>
     </div>

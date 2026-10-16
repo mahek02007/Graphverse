@@ -1,0 +1,267 @@
+/* ============================================================
+   Classroom Presentation Mode HUD Styles
+   ============================================================ */
+
+.pres-bar-container {
+  position: sticky;
+  top: 72px;
+  z-index: 90;
+  margin-bottom: var(--space-6);
+  animation: presSlideDown 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes presSlideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.pres-bar-card {
+  background: rgba(10, 22, 40, 0.95);
+  border: 1px solid var(--pres-theme, var(--color-electric));
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6), 0 0 25px rgba(0, 212, 255, 0.15);
+  backdrop-filter: blur(16px);
+}
+
+.pres-bar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: var(--space-3);
+  margin-bottom: var(--space-3);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.pres-bar-badge-group {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.pres-bar-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  font-size: 0.76rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #f0f6ff;
+}
+
+.pres-bar-counter {
+  font-size: 0.78rem;
+  color: var(--color-text-secondary);
+  font-family: var(--font-display);
+}
+
+.pres-bar-counter strong {
+  color: var(--pres-theme, var(--color-electric));
+}
+
+.pres-bar-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.pres-nav-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: var(--radius-sm);
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-primary);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.pres-nav-btn:hover:not(:disabled) {
+  border-color: var(--pres-theme, var(--color-electric));
+  color: var(--pres-theme, var(--color-electric));
+  background: rgba(0, 212, 255, 0.08);
+}
+
+.pres-nav-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.pres-nav-btn--primary {
+  background: var(--pres-theme, var(--color-electric));
+  color: #050b18;
+  border-color: transparent;
+  font-weight: 700;
+}
+
+.pres-nav-btn--primary:hover:not(:disabled) {
+  filter: brightness(1.15);
+  box-shadow: 0 0 16px var(--pres-theme, var(--color-electric));
+  color: #050b18;
+}
+
+.pres-exit-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  color: #ef4444;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.pres-exit-btn:hover {
+  background: rgba(239, 68, 68, 0.15);
+  border-color: #ef4444;
+}
+
+/* Slide Content Layout */
+.pres-content-layout {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: var(--space-5);
+  margin-bottom: var(--space-4);
+}
+
+.pres-main-column {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.pres-slide-title {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #f0f6ff;
+  line-height: 1.2;
+}
+
+.pres-concept-text {
+  font-size: 0.92rem;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+}
+
+.pres-highlight-box {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-left: 3px solid var(--pres-theme, var(--color-electric));
+  border-radius: var(--radius-sm);
+  padding: var(--space-2) var(--space-3);
+  margin-top: 4px;
+}
+
+.pres-highlight-tag {
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--pres-theme, var(--color-electric));
+  letter-spacing: 0.05em;
+  display: block;
+  margin-bottom: 2px;
+}
+
+.pres-highlight-box p {
+  font-size: 0.82rem;
+  color: var(--color-text-primary);
+  line-height: 1.4;
+  margin: 0;
+}
+
+.pres-notes-column {
+  background: rgba(5, 11, 24, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-4);
+}
+
+.pres-notes-header {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-2);
+}
+
+.pres-notes-list {
+  padding-left: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.pres-note-item {
+  font-size: 0.8rem;
+  color: var(--color-text-secondary);
+  line-height: 1.45;
+}
+
+/* Dots Row */
+.pres-dots-row {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-top: var(--space-2);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.pres-dot-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--color-text-muted);
+  font-size: 0.72rem;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all var(--transition-fast);
+}
+
+.pres-dot-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--color-text-primary);
+}
+
+.pres-dot-btn--active {
+  background: rgba(255, 255, 255, 0.12) !important;
+  border-color: var(--pres-theme, var(--color-electric)) !important;
+  color: var(--pres-theme, var(--color-electric)) !important;
+  font-weight: 700;
+}
+
+.pres-dot-num {
+  font-family: var(--font-display);
+  font-weight: 700;
+}
+
+@media (max-width: 900px) {
+  .pres-content-layout {
+    grid-template-columns: 1fr;
+  }
+}
